@@ -45,12 +45,20 @@
         const data = await (await fetch("/api/status", { cache: "no-store" })).json();
         modelName = data.model || null;
         mode = data.model_ready && !forceSim ? "live" : "sim";
+        if (data.info) fillModelInfo(data.info);
       } catch { mode = "offline"; }
     }
     el.status.dataset.mode = mode;
     el.statusText.textContent =
       mode === "live" ? `Model aktif: ${modelName}` :
       mode === "sim" ? "Model belum terhubung, hasil disimulasikan" : "Tanpa server, hasil disimulasikan";
+  }
+
+  function fillModelInfo(info) {
+    $("spec-arch").textContent = info.label;
+    $("spec-params").textContent = info.params.toLocaleString("id-ID");
+    $("spec-acc").textContent = info.test_accuracy == null ? "Belum dievaluasi" : pct(info.test_accuracy);
+    $("spec-input").textContent = info.input_size === INPUT ? "32×32" : `32×32 → ${info.input_size}×${info.input_size}`;
   }
 
   // ---------------- Kanvas ----------------
