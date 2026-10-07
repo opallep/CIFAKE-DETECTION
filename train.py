@@ -223,7 +223,6 @@ def train_model(model_name: str):
         mode="max",
         patience=config.SCHEDULER_PATIENCE,
         factor=config.SCHEDULER_FACTOR,
-        verbose=True,
     )
     
     # ---- 6. Mixed Precision Scaler ----

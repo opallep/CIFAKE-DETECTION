@@ -25,6 +25,19 @@ except ImportError:
 import config
 
 
+def freeze_bn_stats(module: nn.Module):
+    """
+    Set BatchNorm pada layer beku (parameter tidak dilatih) ke mode eval.
+
+    Tanpa ini, model.train() tetap memperbarui running_mean/running_var
+    layer beku dengan statistik batch CIFAKE, sehingga fitur pretrained
+    ImageNet ikut bergeser walaupun bobotnya "dibekukan".
+    """
+    for m in module.modules():
+        if isinstance(m, nn.BatchNorm2d) and not any(p.requires_grad for p in m.parameters()):
+            m.eval()
+
+
 # ============================================================
 # 1. LIGHTWEIGHT CNN (8 Convolutional Layers, From Scratch)
 # ============================================================
@@ -138,7 +151,9 @@ class ResNet50Transfer(nn.Module):
     - Freeze: conv1, bn1, layer1, layer2, layer3
     - Unfreeze: layer4 (fine-tune fitur high-level)
     - Replace: fc layer → Dropout + Linear(2048 → num_classes)
-    
+    - BatchNorm di layer beku tetap mode eval (running stats ImageNet dipertahankan)
+
+    Parameter dilatih: ±15,0 juta dari 23,5 juta (63,7%).
     Input: 224×224 RGB (resize dari 32×32 CIFAKE)
     """
     
@@ -164,7 +179,13 @@ class ResNet50Transfer(nn.Module):
             nn.Dropout(0.5),
             nn.Linear(in_features, num_classes),
         )
-    
+
+    def train(self, mode: bool = True):
+        super().train(mode)
+        if mode:
+            freeze_bn_stats(self.model)
+        return self
+
     def forward(self, x):
         return self.model(x)
     
@@ -201,10 +222,15 @@ class EfficientNetV2B0Transfer(nn.Module):
     arsitektur EfficientNetV2-B0 yang tidak tersedia di torchvision.
     
     Strategi fine-tuning:
-    - Freeze: Majority of backbone blocks
-    - Unfreeze: 2 block terakhir + conv_head + classifier
-    - Replace: classifier → Linear(in_features → num_classes)
-    
+    - Freeze: conv_stem, bn1, dan stage 1-4 dari 6 stage backbone
+    - Unfreeze: 2 stage terakhir (stage 5-6) + conv_head + bn2 + classifier
+    - Replace: classifier → Linear(1280 → num_classes)
+    - BatchNorm di layer beku tetap mode eval (running stats ImageNet dipertahankan)
+
+    Catatan: stage 5-6 berisi sebagian besar parameter, sehingga yang dilatih
+    ±5,4 juta dari 5,9 juta (92,7%), hampir setara full fine-tuning.
+    Bandingkan ResNet-50: 63,7%.
+
     Input: 224×224 RGB
     """
     
@@ -241,12 +267,18 @@ class EfficientNetV2B0Transfer(nn.Module):
             for param in self.model.bn2.parameters():
                 param.requires_grad = True
         
-        # Unfreeze 2 block terakhir dari backbone
+        # Unfreeze 2 stage terakhir dari backbone (blocks = 6 stage)
         if hasattr(self.model, "blocks"):
             num_blocks = len(self.model.blocks)
             for param in self.model.blocks[max(0, num_blocks - 2):].parameters():
                 param.requires_grad = True
-    
+
+    def train(self, mode: bool = True):
+        super().train(mode)
+        if mode:
+            freeze_bn_stats(self.model)
+        return self
+
     def forward(self, x):
         return self.model(x)
     
