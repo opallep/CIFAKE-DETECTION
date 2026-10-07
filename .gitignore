@@ -1,0 +1,22 @@
+# Dataset CIFAKE (~105 MB, 120.000 file) - unduh dari Kaggle, lihat README
+data/
+
+# Bobot model hasil training (ResNet-50 bisa >90 MB, melewati batas GitHub)
+models/*.pt
+models/*.pth
+
+# Log mentah training (penuh progress bar tqdm)
+results/*_log.txt
+
+# Python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# Editor / OS
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store

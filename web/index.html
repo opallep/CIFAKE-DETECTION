@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CekCitra</title>
+  <meta name="description" content="Periksa apakah sebuah gambar asli atau dihasilkan AI dengan model CNN yang dilatih pada dataset CIFAKE.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=Schibsted+Grotesk:wght@400;500;600&family=Spline+Sans+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <header class="bar">
+    <div class="wrap bar-inner">
+      <a class="brand" href="./" aria-label="CekCitra, halaman utama">
+        <svg class="brand-mark" viewBox="0 0 16 16" aria-hidden="true">
+          <rect x="0" y="0" width="4" height="4"/><rect x="8" y="0" width="4" height="4"/>
+          <rect x="4" y="4" width="4" height="4"/><rect x="12" y="4" width="4" height="4"/>
+          <rect x="0" y="8" width="4" height="4"/><rect x="8" y="8" width="4" height="4" class="hot"/>
+          <rect x="4" y="12" width="4" height="4"/><rect x="12" y="12" width="4" height="4"/>
+        </svg>
+        CekCitra
+      </a>
+      <p class="status" id="status" title="">
+        <span class="led" aria-hidden="true"></span><span id="status-text">Memeriksa server…</span>
+      </p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="intro">
+      <h1>Periksa apakah sebuah gambar asli atau buatan AI.</h1>
+      <p>Model CNN ini dilatih dengan 100.000 citra CIFAKE. Gambar Anda diperkecil ke 32&times;32 piksel sebelum dianalisis,
+        sama seperti data yang dipelajari model.</p>
+    </div>
+
+    <section class="tool" aria-label="Alat pemeriksa">
+      <!-- ===== Viewer ===== -->
+      <div class="viewer">
+        <div class="tool-head">
+          <span class="tag-label">Gambar</span>
+          <div class="seg" role="group" aria-label="Mode tampilan" id="view-mode" hidden>
+            <button type="button" data-mode="full" aria-pressed="true">Asli</button>
+            <button type="button" data-mode="model" aria-pressed="false">32&times;32</button>
+          </div>
+          <button type="button" class="link-btn" id="btn-reset" hidden>Ganti</button>
+        </div>
+
+        <label class="drop" id="drop" for="file-input" tabindex="0">
+          <input id="file-input" type="file" accept="image/jpeg,image/png,image/webp" hidden>
+          <span class="drop-empty" id="drop-empty">
+            <span class="drop-grid" aria-hidden="true"></span>
+            <span class="drop-title">Letakkan gambar di sini</span>
+            <span class="drop-sub">klik untuk memilih file, atau tempel dengan <kbd>Ctrl</kbd> <kbd>V</kbd></span>
+            <span class="drop-hint mono">JPG &middot; PNG &middot; WEBP &nbsp;/&nbsp; maks 10 MB</span>
+          </span>
+          <canvas id="view" class="view" hidden></canvas>
+          <span class="px-badge mono" id="px-badge" hidden></span>
+        </label>
+
+        <p class="file-line mono" id="file-line" hidden></p>
+        <p class="alert" id="error" role="alert" hidden></p>
+
+        <button type="button" class="go" id="btn-check" disabled>
+          <span class="go-text">Periksa gambar</span><kbd class="go-kbd">Enter</kbd>
+        </button>
+      </div>
+
+      <!-- ===== Readout ===== -->
+      <div class="readout" aria-live="polite">
+        <div class="tool-head">
+          <span class="tag-label">Hasil</span>
+          <span class="sim" id="sim-flag" hidden>Simulasi, bukan prediksi model</span>
+        </div>
+
+        <div class="verdict" id="verdict" data-state="idle">
+          <span class="v-word" id="v-word">?</span>
+          <span class="v-sub" id="v-sub">Belum ada gambar yang diperiksa.</span>
+        </div>
+
+        <div class="meter-wrap">
+          <div class="meter" id="meter" aria-hidden="true"></div>
+          <div class="meter-scale mono"><span>Asli</span><span>0,50</span><span>AI</span></div>
+        </div>
+
+        <dl class="rows">
+          <div><dt>Peluang asli</dt><dd class="mono" id="r-real">&mdash;</dd></div>
+          <div><dt>Peluang AI</dt><dd class="mono" id="r-fake">&mdash;</dd></div>
+          <div><dt>Keyakinan</dt><dd id="r-level">&mdash;</dd></div>
+          <div><dt>Model</dt><dd id="r-model">&mdash;</dd></div>
+          <div><dt>Waktu inferensi</dt><dd class="mono" id="r-time">&mdash;</dd></div>
+        </dl>
+
+        <p class="truth" id="truth" hidden></p>
+      </div>
+    </section>
+
+    <section class="block" aria-labelledby="sheet-title">
+      <div class="block-head">
+        <h2 id="sheet-title">Contoh dari data uji</h2>
+        <p>Labelnya disembunyikan. Tebak dulu, lalu periksa dan bandingkan dengan jawaban model.</p>
+      </div>
+      <ol class="sheet" id="sheet"></ol>
+    </section>
+
+    <section class="block" id="log-block" aria-labelledby="log-title" hidden>
+      <div class="block-head">
+        <h2 id="log-title">Riwayat pemeriksaan</h2>
+        <p>Klik untuk membuka kembali hasilnya.</p>
+      </div>
+      <ol class="log" id="log"></ol>
+    </section>
+
+    <section class="block about" aria-labelledby="about-title">
+      <div class="block-head">
+        <h2 id="about-title">Tentang model</h2>
+      </div>
+      <div class="about-grid">
+        <dl class="spec">
+          <div><dt>Arsitektur</dt><dd>LightweightCNN, 8 lapisan konvolusi</dd></div>
+          <div><dt>Parameter</dt><dd class="mono">583.138</dd></div>
+          <div><dt>Data latih</dt><dd class="mono">80.000 <span class="dim">+ 20.000 validasi</span></dd></div>
+          <div><dt>Data uji</dt><dd class="mono">20.000</dd></div>
+          <div><dt>Ukuran input</dt><dd class="mono">32 &times; 32 &times; 3</dd></div>
+          <div><dt>Sumber citra AI</dt><dd>Stable Diffusion v1.4</dd></div>
+        </dl>
+        <div class="notes">
+          <p><strong>Resolusinya kecil.</strong> Foto beresolusi tinggi kehilangan banyak detail saat diperkecil ke 32&times;32,
+            jadi hasilnya bisa kurang akurat dibanding pada data uji.</p>
+          <p><strong>Hanya satu generator.</strong> Semua citra AI di CIFAKE dibuat dengan Stable Diffusion v1.4. Gambar dari
+            Midjourney, DALL&middot;E, atau generator lain bisa punya ciri yang berbeda.</p>
+          <p><strong>Ini perkiraan, bukan bukti.</strong> Jangan jadikan hasil ini satu-satunya dasar untuk menilai keaslian sebuah gambar.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-inner">
+      <span>Tugas Akhir &middot; Deteksi Citra AI-Generated Berbasis Deep Learning</span>
+      <span>Dataset CIFAKE &mdash; Bird &amp; Lotfi (2024)</span>
+    </div>
+  </footer>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>
