@@ -3,6 +3,7 @@
 Tugas akhir: membandingkan 3 CNN (LightweightCNN, ResNet50, EfficientNetV2B0) untuk mendeteksi citra AI vs asli pada dataset CIFAKE, lalu memakai model terbaik di website CekCitra (`web/`).
 
 Riwayat dan status lengkap: lihat `docs/LAPORAN_SESI_*.md` (terbaru = nomor terbesar).
+Hasil eksperimen lengkap ketiga model: `docs/LAPORAN_PERBANDINGAN_MODEL.md`. Model terpilih: EfficientNetV2B0 (akurasi uji 98,52%).
 
 ## Cara kerja dengan pengguna
 - Komunikasi dalam Bahasa Indonesia.

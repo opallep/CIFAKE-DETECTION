@@ -1,0 +1,272 @@
+[
+  {
+    "Model": "LightweightCNN",
+    "Kategori": "pesawat",
+    "Category": "airplane",
+    "Accuracy": 0.9445,
+    "Recall_REAL": 0.952,
+    "Recall_FAKE": 0.937,
+    "N": 2000
+  },
+  {
+    "Model": "LightweightCNN",
+    "Kategori": "mobil",
+    "Category": "automobile",
+    "Accuracy": 0.954,
+    "Recall_REAL": 0.977,
+    "Recall_FAKE": 0.931,
+    "N": 2000
+  },
+  {
+    "Model": "LightweightCNN",
+    "Kategori": "burung",
+    "Category": "bird",
+    "Accuracy": 0.9055,
+    "Recall_REAL": 0.961,
+    "Recall_FAKE": 0.85,
+    "N": 2000
+  },
+  {
+    "Model": "LightweightCNN",
+    "Kategori": "kucing",
+    "Category": "cat",
+    "Accuracy": 0.9575,
+    "Recall_REAL": 0.985,
+    "Recall_FAKE": 0.93,
+    "N": 2000
+  },
+  {
+    "Model": "LightweightCNN",
+    "Kategori": "rusa",
+    "Category": "deer",
+    "Accuracy": 0.9805,
+    "Recall_REAL": 0.993,
+    "Recall_FAKE": 0.968,
+    "N": 2000
+  },
+  {
+    "Model": "LightweightCNN",
+    "Kategori": "anjing",
+    "Category": "dog",
+    "Accuracy": 0.953,
+    "Recall_REAL": 0.989,
+    "Recall_FAKE": 0.917,
+    "N": 2000
+  },
+  {
+    "Model": "LightweightCNN",
+    "Kategori": "katak",
+    "Category": "frog",
+    "Accuracy": 0.984,
+    "Recall_REAL": 0.987,
+    "Recall_FAKE": 0.981,
+    "N": 2000
+  },
+  {
+    "Model": "LightweightCNN",
+    "Kategori": "kuda",
+    "Category": "horse",
+    "Accuracy": 0.9465,
+    "Recall_REAL": 0.987,
+    "Recall_FAKE": 0.906,
+    "N": 2000
+  },
+  {
+    "Model": "LightweightCNN",
+    "Kategori": "kapal",
+    "Category": "ship",
+    "Accuracy": 0.918,
+    "Recall_REAL": 0.98,
+    "Recall_FAKE": 0.856,
+    "N": 2000
+  },
+  {
+    "Model": "LightweightCNN",
+    "Kategori": "truk",
+    "Category": "truck",
+    "Accuracy": 0.9315,
+    "Recall_REAL": 0.982,
+    "Recall_FAKE": 0.881,
+    "N": 2000
+  },
+  {
+    "Model": "ResNet50",
+    "Kategori": "pesawat",
+    "Category": "airplane",
+    "Accuracy": 0.9665,
+    "Recall_REAL": 0.958,
+    "Recall_FAKE": 0.975,
+    "N": 2000
+  },
+  {
+    "Model": "ResNet50",
+    "Kategori": "mobil",
+    "Category": "automobile",
+    "Accuracy": 0.985,
+    "Recall_REAL": 0.986,
+    "Recall_FAKE": 0.984,
+    "N": 2000
+  },
+  {
+    "Model": "ResNet50",
+    "Kategori": "burung",
+    "Category": "bird",
+    "Accuracy": 0.958,
+    "Recall_REAL": 0.945,
+    "Recall_FAKE": 0.971,
+    "N": 2000
+  },
+  {
+    "Model": "ResNet50",
+    "Kategori": "kucing",
+    "Category": "cat",
+    "Accuracy": 0.9875,
+    "Recall_REAL": 0.988,
+    "Recall_FAKE": 0.987,
+    "N": 2000
+  },
+  {
+    "Model": "ResNet50",
+    "Kategori": "rusa",
+    "Category": "deer",
+    "Accuracy": 0.9945,
+    "Recall_REAL": 0.994,
+    "Recall_FAKE": 0.995,
+    "N": 2000
+  },
+  {
+    "Model": "ResNet50",
+    "Kategori": "anjing",
+    "Category": "dog",
+    "Accuracy": 0.988,
+    "Recall_REAL": 0.985,
+    "Recall_FAKE": 0.991,
+    "N": 2000
+  },
+  {
+    "Model": "ResNet50",
+    "Kategori": "katak",
+    "Category": "frog",
+    "Accuracy": 0.9975,
+    "Recall_REAL": 0.997,
+    "Recall_FAKE": 0.998,
+    "N": 2000
+  },
+  {
+    "Model": "ResNet50",
+    "Kategori": "kuda",
+    "Category": "horse",
+    "Accuracy": 0.989,
+    "Recall_REAL": 0.991,
+    "Recall_FAKE": 0.987,
+    "N": 2000
+  },
+  {
+    "Model": "ResNet50",
+    "Kategori": "kapal",
+    "Category": "ship",
+    "Accuracy": 0.9755,
+    "Recall_REAL": 0.985,
+    "Recall_FAKE": 0.966,
+    "N": 2000
+  },
+  {
+    "Model": "ResNet50",
+    "Kategori": "truk",
+    "Category": "truck",
+    "Accuracy": 0.974,
+    "Recall_REAL": 0.973,
+    "Recall_FAKE": 0.975,
+    "N": 2000
+  },
+  {
+    "Model": "EfficientNetV2B0",
+    "Kategori": "pesawat",
+    "Category": "airplane",
+    "Accuracy": 0.976,
+    "Recall_REAL": 0.966,
+    "Recall_FAKE": 0.986,
+    "N": 2000
+  },
+  {
+    "Model": "EfficientNetV2B0",
+    "Kategori": "mobil",
+    "Category": "automobile",
+    "Accuracy": 0.988,
+    "Recall_REAL": 0.985,
+    "Recall_FAKE": 0.991,
+    "N": 2000
+  },
+  {
+    "Model": "EfficientNetV2B0",
+    "Kategori": "burung",
+    "Category": "bird",
+    "Accuracy": 0.962,
+    "Recall_REAL": 0.949,
+    "Recall_FAKE": 0.975,
+    "N": 2000
+  },
+  {
+    "Model": "EfficientNetV2B0",
+    "Kategori": "kucing",
+    "Category": "cat",
+    "Accuracy": 0.989,
+    "Recall_REAL": 0.99,
+    "Recall_FAKE": 0.988,
+    "N": 2000
+  },
+  {
+    "Model": "EfficientNetV2B0",
+    "Kategori": "rusa",
+    "Category": "deer",
+    "Accuracy": 0.994,
+    "Recall_REAL": 0.993,
+    "Recall_FAKE": 0.995,
+    "N": 2000
+  },
+  {
+    "Model": "EfficientNetV2B0",
+    "Kategori": "anjing",
+    "Category": "dog",
+    "Accuracy": 0.992,
+    "Recall_REAL": 0.994,
+    "Recall_FAKE": 0.99,
+    "N": 2000
+  },
+  {
+    "Model": "EfficientNetV2B0",
+    "Kategori": "katak",
+    "Category": "frog",
+    "Accuracy": 0.995,
+    "Recall_REAL": 0.993,
+    "Recall_FAKE": 0.997,
+    "N": 2000
+  },
+  {
+    "Model": "EfficientNetV2B0",
+    "Kategori": "kuda",
+    "Category": "horse",
+    "Accuracy": 0.9895,
+    "Recall_REAL": 0.988,
+    "Recall_FAKE": 0.991,
+    "N": 2000
+  },
+  {
+    "Model": "EfficientNetV2B0",
+    "Kategori": "kapal",
+    "Category": "ship",
+    "Accuracy": 0.98,
+    "Recall_REAL": 0.979,
+    "Recall_FAKE": 0.981,
+    "N": 2000
+  },
+  {
+    "Model": "EfficientNetV2B0",
+    "Kategori": "truk",
+    "Category": "truck",
+    "Accuracy": 0.9865,
+    "Recall_REAL": 0.988,
+    "Recall_FAKE": 0.985,
+    "N": 2000
+  }
+]
