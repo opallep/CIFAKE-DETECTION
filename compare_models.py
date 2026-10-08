@@ -214,18 +214,21 @@ def plot_comparison_chart(df: pd.DataFrame):
         axes[idx].set_title(metric, fontsize=13, fontweight="bold")
         axes[idx].set_ylabel(metric, fontsize=11)
         axes[idx].grid(axis="y", alpha=0.3)
-        
-        # Tampilkan nilai di atas bar
+
+        # Set y-axis range untuk visibility (sumbu dipotong agar selisih antar model terlihat)
+        min_val = min(values)
+        if "%" in metric:
+            axes[idx].set_ylim(max(0, min_val - 5), 100.5)
+        else:
+            axes[idx].set_ylim(max(0, min_val - 0.01), 1.001)
+
+        # Tampilkan nilai di atas bar (offset 1% dari rentang sumbu)
+        y_lo, y_hi = axes[idx].get_ylim()
         for bar, val in zip(bars, values):
             axes[idx].text(
-                bar.get_x() + bar.get_width() / 2, bar.get_height() + 0.2,
+                bar.get_x() + bar.get_width() / 2, bar.get_height() + (y_hi - y_lo) * 0.01,
                 f"{val}", ha="center", va="bottom", fontsize=10, fontweight="bold"
             )
-        
-        # Set y-axis range untuk visibility
-        if "%" in metric:
-            min_val = min(values)
-            axes[idx].set_ylim(max(0, min_val - 5), 100.5)
     
     plt.suptitle("Perbandingan Model CIFAKE Detection", fontsize=15, fontweight="bold", y=1.02)
     plt.tight_layout()

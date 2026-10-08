@@ -9,7 +9,8 @@ Jalankan:
     python web/app.py --lan      → bisa dibuka dari HP di jaringan Wi-Fi yang sama
 
 Model yang dipakai bisa diganti lewat variabel lingkungan CEKCITRA_MODEL
-(LightweightCNN | ResNet50 | EfficientNetV2B0). Default: ResNet50.
+(LightweightCNN | ResNet50 | EfficientNetV2B0). Default: EfficientNetV2B0,
+model dengan akurasi uji tertinggi (lihat results/model_comparison.csv).
 """
 
 import io
@@ -88,7 +89,7 @@ def load_model_info(model_name: str, model) -> dict:
     return info
 
 
-MODEL_NAME = os.environ.get("CEKCITRA_MODEL", config.MODEL_RESNET50)
+MODEL_NAME = os.environ.get("CEKCITRA_MODEL", config.MODEL_EFFICIENTNET)
 MODEL = load_model(MODEL_NAME)
 MODEL_INFO = load_model_info(MODEL_NAME, MODEL) if MODEL is not None else None
 

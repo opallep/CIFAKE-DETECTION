@@ -1,0 +1,4 @@
+Model,Accuracy (%),Precision (%),Recall (%),F1-Score (%),AUC-ROC,Inference (ms/img),Total Params,Trainable Params
+LightweightCNN,94.75,94.93,94.75,94.74,0.9921,0.1,583138,583138
+ResNet50,98.16,98.16,98.15,98.15,0.9978,0.927,23512130,14968834
+EfficientNetV2B0,98.52,98.52,98.52,98.52,0.9986,0.516,5861266,5436310

@@ -1,0 +1,35 @@
+[
+  {
+    "Model":"LightweightCNN",
+    "Accuracy (%)":94.75,
+    "Precision (%)":94.93,
+    "Recall (%)":94.75,
+    "F1-Score (%)":94.74,
+    "AUC-ROC":0.9921,
+    "Inference (ms\/img)":0.1,
+    "Total Params":583138,
+    "Trainable Params":583138
+  },
+  {
+    "Model":"ResNet50",
+    "Accuracy (%)":98.16,
+    "Precision (%)":98.16,
+    "Recall (%)":98.15,
+    "F1-Score (%)":98.15,
+    "AUC-ROC":0.9978,
+    "Inference (ms\/img)":0.927,
+    "Total Params":23512130,
+    "Trainable Params":14968834
+  },
+  {
+    "Model":"EfficientNetV2B0",
+    "Accuracy (%)":98.52,
+    "Precision (%)":98.52,
+    "Recall (%)":98.52,
+    "F1-Score (%)":98.52,
+    "AUC-ROC":0.9986,
+    "Inference (ms\/img)":0.516,
+    "Total Params":5861266,
+    "Trainable Params":5436310
+  }
+]
