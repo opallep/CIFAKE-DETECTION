@@ -1,7 +1,7 @@
 # Laporan Eksperimen: Perbandingan Tiga Model CNN untuk Deteksi Citra AI-Generated pada Dataset CIFAKE
 
-**Tanggal eksperimen:** 7–8 Oktober 2026
-**Repo:** https://github.com/opallep/CIFAKE-DETECTION
+**Tanggal eksperimen:** 7–8 Oktober 2026  
+**Repo:** https://github.com/opallep/CIFAKE-DETECTION  
 **Perangkat:** Laptop, NVIDIA GeForce RTX 4060 Laptop GPU (8 GB)
 
 ---
@@ -43,8 +43,8 @@ Tiga model CNN dilatih dan diuji untuk membedakan citra **asli (REAL)** dan **bu
 ## 2. Tujuan eksperimen
 
 1. Melatih tiga arsitektur CNN dengan karakteristik berbeda:
-   - CNN ringan yang dilatih dari nol
-   - dua model transfer learning dari ImageNet
+    - CNN ringan yang dilatih dari nol
+    - dua model transfer learning dari ImageNet
 2. Membandingkan kemampuan ketiganya dalam mendeteksi citra buatan AI dari sisi akurasi, keseimbangan antar kelas, efisiensi, dan ketahanan.
 3. Memilih model terbaik untuk dipakai pada aplikasi web.
 
@@ -518,11 +518,11 @@ Waktu di tabel ini termasuk pra-pemrosesan satu citra tanpa batch, sehingga lebi
 
 1. Ketiga model **layak** untuk mendeteksi citra buatan AI pada domain CIFAKE. Akurasi uji semuanya di atas 94% dan AUC di atas 0,99.
 2. **EfficientNetV2-B0 adalah model terbaik:**
-   - akurasi 98,52%, F1 98,52%, AUC 0,9986
-   - kesalahan paling sedikit (296 dari 20.000)
-   - paling baik mendeteksi citra AI (recall FAKE 98,79%)
-   - paling tahan kompresi berat
-   - efisien: 5,86 juta parameter, 0,52 ms/citra
+    - akurasi 98,52%, F1 98,52%, AUC 0,9986
+    - kesalahan paling sedikit (296 dari 20.000)
+    - paling baik mendeteksi citra AI (recall FAKE 98,79%)
+    - paling tahan kompresi berat
+    - efisien: 5,86 juta parameter, 0,52 ms/citra
 3. **ResNet-50** hampir setara akurasinya (98,16%), tetapi 4× lebih besar dan lebih lambat.
 4. **LightweightCNN** cocok untuk perangkat dengan sumber daya terbatas, karena paling kecil (2,4 MB) dan paling cepat. Kekurangannya, akurasinya 3,8% lebih rendah dan cenderung meloloskan citra AI.
 
@@ -531,10 +531,10 @@ Waktu di tabel ini termasuk pra-pemrosesan satu citra tanpa batch, sehingga lebi
 1. **Gunakan EfficientNetV2-B0 untuk aplikasi web CekCitra.** Rekomendasi ini sudah diterapkan.
 2. Jalankan **tahap 6**: uji website dengan foto asli dan foto AI dari luar dataset (hewan atau kendaraan dari 10 kategori, serta beberapa foto di luar kategori sebagai uji batasan).
 3. Untuk penelitian lanjutan:
-   - ulangi training dengan beberapa seed untuk mengukur variasi
-   - pakai dataset dengan resolusi lebih tinggi dan generator AI yang lebih beragam
-   - latih dengan augmentasi kompresi JPEG agar lebih tahan pada Q rendah
-   - lakukan analisis Grad-CAM
+    - ulangi training dengan beberapa seed untuk mengukur variasi
+    - pakai dataset dengan resolusi lebih tinggi dan generator AI yang lebih beragam
+    - latih dengan augmentasi kompresi JPEG agar lebih tahan pada Q rendah
+    - lakukan analisis Grad-CAM
 
 ---
 
