@@ -27,7 +27,7 @@ CSS = """
   size: A4;
   margin: 18mm 16mm 18mm 16mm;
   @bottom-right { content: "Halaman " counter(page) " / " counter(pages); font: 8pt "Segoe UI", sans-serif; color: #666; }
-  @bottom-left { content: "Laporan Eksperimen CIFAKE Detection"; font: 8pt "Segoe UI", sans-serif; color: #666; }
+  @bottom-left { content: "__FOOTER__"; font: 8pt "Segoe UI", sans-serif; color: #666; }
 }
 html { font: 10pt/1.5 "Segoe UI", Calibri, Arial, sans-serif; color: #1a1a1a; }
 body { margin: 0; }
@@ -61,15 +61,17 @@ ul, ol { padding-left: 18pt; }
 def build(md_path: Path) -> Path:
     text = md_path.read_text(encoding="utf-8")
     body = markdown.markdown(text, extensions=["tables", "fenced_code", "toc", "sane_lists"])
-    # Halaman 1 = judul + daftar isi; isi laporan dimulai di halaman baru (h2 kedua)
+    # Jika ada "Daftar isi": halaman 1 = judul + daftar isi, isi laporan mulai di halaman baru (h2 kedua)
     first = body.find("<h2")
     second = body.find("<h2", first + 1)
-    if second != -1:
+    has_toc = "Daftar isi" in body[first:body.find("</h2>", first)]
+    if has_toc and second != -1:
         body = body[:second] + '<h2 class="page-start"' + body[second + 3:]
     title = text.splitlines()[0].lstrip("# ").strip()
     base = md_path.parent.resolve().as_uri() + "/"
+    footer = (title if len(title) <= 70 else title[:67] + "...").replace('"', "'")
     html = (f'<!doctype html><html lang="id"><head><meta charset="utf-8"><base href="{base}">'
-            f"<title>{title}</title><style>{CSS}</style></head><body>{body}</body></html>")
+            f"<title>{title}</title><style>{CSS.replace('__FOOTER__', footer)}</style></head><body>{body}</body></html>")
 
     pdf_path = md_path.with_suffix(".pdf").resolve()
     edge = next((p for p in EDGE_PATHS if os.path.exists(p)), None)
