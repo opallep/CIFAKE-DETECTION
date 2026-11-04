@@ -5,6 +5,10 @@ data/
 models/*.pt
 models/*.pth
 
+# Checkpoint dan prediksi per citra eksperimen CD-2 (besar); metrics/history/run_info tetap di-commit
+experiments/**/*.pt
+experiments/**/predictions.csv
+
 # Log mentah training (penuh progress bar tqdm)
 results/*_log.txt
 

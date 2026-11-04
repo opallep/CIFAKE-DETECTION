@@ -1,5 +1,11 @@
 # CIFAKE Detection - Deteksi Citra AI-Generated vs Citra Asli
 
+> **Pembaruan CD-2:** proyek beralih ke **dataset multi-generator** (GenImage/ArtiFact,
+> ≥ 10 generator, ≥ 3 generator unseen) dengan ablation 3 arsitektur × (tanpa/dengan SE).
+> Pipeline baru ada di `src/`, `configs/`, dan `tests/verification/`; alur lengkap di `CLAUDE.md`,
+> keputusan teknis di `docs/decisions.md`. Isi README di bawah ini menjelaskan **baseline CIFAKE**
+> (1 generator, 32×32) yang tetap disimpan sebagai pembanding.
+
 > **Tugas Akhir / Skripsi**  
 > *Rancang Bangun Aplikasi Deteksi Citra AI-Generated dan Citra Asli Berbasis Deep Learning*
 

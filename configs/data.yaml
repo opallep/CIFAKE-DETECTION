@@ -1,0 +1,88 @@
+# ============================================================
+# Konfigurasi dataset multi-generator (CD-2 Bagian 8; T1, T2, T3, H7)
+# ============================================================
+# STATUS: TEMPLATE. Daftar generator final dan pemetaan folder masih
+# [TERBUKA] (brief Bagian 12 no. 1). Nama folder di bawah mengikuti
+# struktur rilis GenImage/ArtiFact yang umum; cocokkan dengan hasil
+# unduhan sebelum menjalankan build_manifest.
+#
+# Aturan:
+# - label: "ai" atau "real". Foto manusia diedit/dipoles AI -> "ai".
+#   Foto asli dengan filter biasa (tanpa AI) -> "real".
+# - generator: untuk citra "ai" = nama generator. Untuk citra "real" =
+#   kelompok generator pasangannya (agar akurasi per generator memuat
+#   kedua kelas). Boleh berupa daftar: citra dibagi acak ke kelompok itu.
+# - image_type: manusia | hewan | objek | pemandangan | manusia_edit_ai
+#   Bisa nilai tetap, atau image_type_rules (regex pada path relatif,
+#   aturan pertama yang cocok dipakai; image_type menjadi nilai default).
+# - license: wajib diisi (H7). Sumber tanpa lisensi akan ditolak.
+
+data_root: "D:/DATASET"          # override dengan --data-root
+manifest_dir: "data/manifests"
+harmonized_dir: "data/harmonized"
+
+seed: 42
+max_images_per_source: 5000       # subsampling acak per sumber (null = semua)
+min_test_images_per_class: 400    # T1: per generator pada data uji
+
+# Pembagian generator (T1: >= 10 generator, >= 3 unseen).
+# Generator unseen hanya masuk split test_unseen (T2).
+generators:
+  seen:   [sd_v1_4, midjourney, adm, biggan, stylegan2, glide, latent_diffusion]
+  unseen: [sd_v1_5, vqdm, wukong]
+# Proporsi split untuk generator seen (stratified per generator, label, image_type).
+split_ratio: {train: 0.8, val: 0.1, test_seen: 0.1}
+
+# Harmonisasi berkas kedua kelas (T3), dipakai juga oleh server (T7).
+harmonize:
+  short_side: 256
+  crop: 256
+  format: JPEG
+  quality: 95
+
+# Deduplikasi lintas split (T2): exact (sha256) + perceptual (dHash 64-bit).
+dedup:
+  phash_max_distance: 0           # 0 = hanya dHash identik dianggap duplikat
+
+sources:
+  # ---------------- GenImage (subset ImageNet) ----------------
+  - name: genimage_sdv14
+    root: GenImage/stable_diffusion_v_1_4/imagenet_ai_0419_sdv4
+    include: ["train/ai/*", "val/ai/*"]
+    label: ai
+    generator: sd_v1_4
+    image_type: objek
+    image_type_rules: []          # TODO: petakan kelas ImageNet hewan -> "hewan"
+    source: GenImage
+    license: "GenImage (Zhu dkk., NeurIPS 2023) - lisensi penelitian, cek README rilis"
+  - name: genimage_sdv14_real
+    root: GenImage/stable_diffusion_v_1_4/imagenet_ai_0419_sdv4
+    include: ["train/nature/*", "val/nature/*"]
+    label: real
+    generator: sd_v1_4
+    image_type: objek
+    source: GenImage (ImageNet)
+    license: "ImageNet - non-komersial untuk penelitian"
+
+  # ---------------- ArtiFact ----------------
+  - name: artifact_stylegan2
+    root: ArtiFact/stylegan2
+    include: ["**/*"]
+    label: ai
+    generator: stylegan2
+    image_type: manusia
+    source: ArtiFact
+    license: "ArtiFact (Rahman dkk., 2023) - mengikuti lisensi sumber asli"
+  - name: artifact_ffhq
+    root: ArtiFact/ffhq
+    include: ["**/*"]
+    label: real
+    generator: stylegan2
+    image_type: manusia
+    source: ArtiFact (FFHQ)
+    license: "FFHQ - CC BY-NC-SA 4.0"
+
+  # Tambahkan sumber lain (midjourney, adm, biggan, glide, latent_diffusion,
+  # sd_v1_5, vqdm, wukong, foto manusia diedit AI, foto asli berfilter, ...)
+  # dengan pola yang sama. Setiap generator di bagian "generators" harus
+  # punya sumber "ai" dan "real".
